@@ -13,21 +13,15 @@ function App() {
     APPOINTMENTS: "/appointments",
   };
 
-  const addAppointment = (appointment) => {
-    if (
-      appointment.title &&
-      appointment.contact &&
-      appointment.date &&
-      appointment.time
-    ) {
-      setAppointments([...appointments, appointment]);
-    }
+  const addAppointment = (title, contact, date, time) => {
+    setAppointments([
+      ...appointments,
+      { title: title, contact: contact, date: date, time: time },
+    ]);
   };
 
-  const addContact = (contact) => {
-    if (contact.name && contact.phone && contact.email) {
-      setContacts([...contacts, contact]);
-    }
+  const addContact = (name, phone, email) => {
+    setContacts([...contacts, { name: name, phone: phone, email: email }]);
   };
 
   return (

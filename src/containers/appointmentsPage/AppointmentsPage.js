@@ -8,13 +8,20 @@ export const AppointmentsPage = ({
   addAppointment,
 }) => {
   const [title, setTitle] = useState("");
-  const [contact, setContact] = useState("");
+  const isContact = () => {
+    if (contacts.lenght > 0) {
+      return contacts[0].name;
+    } else {
+      return "";
+    }
+  };
+  const [contact, setContact] = useState(isContact());
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addAppointment({ title, contact, date, time });
+    addAppointment(title, contact, date, time);
     setTitle("");
     setContact("");
     setDate("");
@@ -22,7 +29,7 @@ export const AppointmentsPage = ({
   };
 
   return (
-    <div>
+    <>
       <section>
         <h2>Add Appointment</h2>
         <AppointmentForm
@@ -43,6 +50,6 @@ export const AppointmentsPage = ({
         <h2>Appointments</h2>
         <TileList tiles={appointments} />
       </section>
-    </div>
+    </>
   );
 };

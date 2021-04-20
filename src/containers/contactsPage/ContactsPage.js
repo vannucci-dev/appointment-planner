@@ -12,7 +12,7 @@ export const ContactsPage = ({ contacts, addContact }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!isDuplicate) {
-      addContact(name, email, phone);
+      addContact(name, phone, email);
       setName("");
       setEmail("");
       setPhone("");
@@ -21,15 +21,28 @@ export const ContactsPage = ({ contacts, addContact }) => {
 
   //Checking for duplicates in contact array when new name is inserted in form
   useEffect(() => {
-    if (contacts.map((contact) => contact.name === name)) {
+    const nameIsDuplicate = () => {
+      const isThere = contacts.find((contact) => contact.name === name);
+      if (isThere !== undefined) {
+        return true;
+      }
+      return false;
+    };
+
+    if (nameIsDuplicate()) {
       setIsDuplicate(true);
+    } else {
+      setIsDuplicate(false);
     }
-  }, [name, contacts, setIsDuplicate]);
+  }, [name, contacts, isDuplicate]);
 
   return (
-    <div>
+    <>
       <section>
-        <h2>Add Contact</h2>
+        <h2>
+          Add Contact
+          {isDuplicate ? "Contact already present" : ""}
+        </h2>
         <ContactForm
           handleSubmit={handleSubmit}
           name={name}
@@ -45,6 +58,6 @@ export const ContactsPage = ({ contacts, addContact }) => {
         <h2>Contacts</h2>
         <TileList tiles={contacts} />
       </section>
-    </div>
+    </>
   );
 };
